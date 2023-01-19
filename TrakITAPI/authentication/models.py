@@ -1,7 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin)
 
-# creating a custom user model 
+# creating a custom user model
+
+
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
         if username is None:
@@ -12,13 +15,15 @@ class UserManager(BaseUserManager):
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
         user.save()
-        
-    def create_user(self, username, email, password=None):
+        return user
+
+    def create_superuser(self, username, email, password=None):
         if password is None:
             raise TypeError('password should be provided')
-        if email is None:
-            raise TypeError('users should have an email')
-        # define how  a user sould be created
+        # define how  a superuser sould be created
+        user = self.create_user(username, email, password)
         user = self.model(username=username, email=self.normalize_email(email))
-        user.set_password(password)
+        user.is_superuser = True
+        user.is_staff = True
         user.save()
+        return user
