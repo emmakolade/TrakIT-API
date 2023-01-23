@@ -33,6 +33,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+# swagger setting 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS':{
+        'Bearer':{
+            'type': 'apiKey',
+            'name':'Authorization',
+            'in': 'header',
+        }
+    }
+}
+
 # tells django to use my custon user model
 AUTH_USER_MODEL = 'authentication.User'
 

@@ -4,7 +4,7 @@ from authentication.models import User
 
 
 class Expense(models.Model):
-    CATEGORY = [
+    CATEGORY_OPTIONS = [
         ('ONLINE_SERVICES', 'ONLINE_SERVICES'),
         ('FOOD', 'FOOD'),
         ('HOUSING', 'HOUSING'),
@@ -20,9 +20,9 @@ class Expense(models.Model):
         ('DEBT_PAYMENT', 'DEBT_PAYMENT'),
 
     ]
-    
-    category = models.CharField(choices=CATEGORY, max_length=255)
-    amount=models.DecimalField(max_digits=10, decimal_places=2, max_length=255)
-    decription=models.TextField()
+
+    category = models.CharField(choices=CATEGORY_OPTIONS, max_length=255)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField(null=False, blank=False, auto_now_add=True)
+    date = models.DateTimeField(null=False, blank=False)

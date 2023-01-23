@@ -31,7 +31,7 @@ class RegisterView(generics.GenericAPIView):
 
         current_site = get_current_site(request).domain
         relative_link = reverse('verify-email')
-        absolute_url = 'http://'+current_site + \
+        absolute_url = 'http://' + current_site + \
             relative_link+'?token='+str(token)
         email_body = 'Hello' + user.username + \
             'use the linke below to verify your email\n' + absolute_url
@@ -47,7 +47,8 @@ class RegisterView(generics.GenericAPIView):
 class VerifyEmail(views.APIView):
     serializer_class = EmailVerificationSerializer
 
-    token_param_config = openapi.Parameter('token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
+    token_param_config = openapi.Parameter(
+        'token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
 
     @swagger_auto_schema(manual_parameters=[token_param_config])
     def get(self, request):
@@ -63,11 +64,11 @@ class VerifyEmail(views.APIView):
         except jwt.ExpiredSignatureError as identifier:
             return Response({'error': 'activation Expired'}, status.HTTP_400_BAD_REQUEST)
 
+
 class LoginView(generics.GenericAPIView):
-    serializer_class=LoginSerializer
-    
+    serializer_class = LoginSerializer
+
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-        

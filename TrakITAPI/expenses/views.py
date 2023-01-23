@@ -8,22 +8,22 @@ from .permissions import IsUSer
 
 
 class ExpenseListAPIView(ListCreateAPIView):
-    serializer_class= ExpenseSerializer
-    queryset= Expense.objects.all()
-    permission_classes=(permissions.IsAuthenticated,)
-    
+    serializer_class = ExpenseSerializer
+    queryset = Expense.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-    
+
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
-    
+
 
 class ExpenseDetailsAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ExpenseSerializer
     queryset = Expense.objects.all()
     permission_classes = (permissions.IsAuthenticated, IsUSer,)
-    lookup_field= 'id'
+    lookup_field = 'id'
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
