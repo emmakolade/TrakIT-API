@@ -1,4 +1,4 @@
-from .serializers import RegisterSerializer, EmailVerificationSerializer, LoginSerializer, PasswordResetEmailSerializer
+from .serializers import RegisterSerializer, EmailVerificationSerializer, LoginSerializer, PasswordResetEmailSerializer, SetNewPasswordSerializer
 from django.shortcuts import render
 from rest_framework import generics, status, views, permissions
 from rest_framework.response import Response
@@ -123,8 +123,11 @@ class PasswordTokenCheckAPIView(generics.GenericAPIView):
         except DjangoUnicodeDecodeError:
             return Response({'error': 'invalid token, request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
+
 class SetNewPassword(generics.GenericAPIView):
-    serializer_class=SetNewPasswordSerializer
-    
+    serializer_class = SetNewPasswordSerializer
+
     def patch(self, request):
-        serializer=self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({'success': True, 'message': 'password reset success'}, status=status.HTTP_200_OK)

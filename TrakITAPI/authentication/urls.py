@@ -1,5 +1,5 @@
 
-from .views import RegisterView, VerifyEmail, LoginView, PasswordTokenCheckAPIView, PasswordResetEmail
+from .views import RegisterView, VerifyEmail, LoginView, PasswordTokenCheckAPIView, PasswordResetEmail, SetNewPassword
 from django.urls import path
 
 
@@ -10,4 +10,6 @@ urlpatterns = [
     path('request-reset/', PasswordResetEmail.as_view(), name='request-reset'),
     path('password-reset/<uidb64>/token/',
          PasswordTokenCheckAPIView.as_view(), name='password-reset'),
+    path('password-reset-complete', SetNewPassword.as_view(),
+         name='password-reset-complete'),
 ]
