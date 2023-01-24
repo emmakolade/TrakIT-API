@@ -1,15 +1,18 @@
 from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .serializers import ExpenseSerializer
-from .models import Expense
+from .serializers import IncomeSerializer
+from .models import Income
 from rest_framework import permissions
 from .permissions import IsUSer
 # Create your views here.
 
 
-class ExpenseListAPIView(ListCreateAPIView):
-    serializer_class = ExpenseSerializer
-    queryset = Expense.objects.all()
+class IncomeListAPIView(ListCreateAPIView):
+    serializer_class = IncomeSerializer
+    queryset = Income.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
@@ -19,9 +22,9 @@ class ExpenseListAPIView(ListCreateAPIView):
         return self.queryset.filter(user=self.request.user)
 
 
-class ExpenseDetailsAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = ExpenseSerializer
-    queryset = Expense.objects.all()
+class IncomeDetailsAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = IncomeSerializer
+    queryset = Income.objects.all()
     permission_classes = (permissions.IsAuthenticated, IsUSer,)
     lookup_field = 'id'
 
