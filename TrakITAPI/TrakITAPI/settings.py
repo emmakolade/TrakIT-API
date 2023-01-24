@@ -33,13 +33,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-
-# swagger setting 
+# swagger setting
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS':{
-        'Bearer':{
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
             'type': 'apiKey',
-            'name':'Authorization',
+            'name': 'Authorization',
             'in': 'header',
         }
     }
@@ -68,8 +67,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,6 +80,8 @@ INSTALLED_APPS = [
     'authentication',
     'expenses',
     'income',
+    'userstats',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -93,7 +92,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'TrakITAPI.urls'
 
